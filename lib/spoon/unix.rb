@@ -172,7 +172,7 @@ module Spoon
   def self._prepare_spawn_args(argv, env)
     pid_ptr = FFI::MemoryPointer.new(:pid_t, 1)
 
-    args_ary = argv.inject(PointerArray.new) { |ary, str| ary << FFI::MemoryPointer.from_string(str) }
+    args_ary = argv.compact.inject(PointerArray.new) { |ary, str| ary << FFI::MemoryPointer.from_string(str) }
     env_ary = PointerArray.new
     env.each_pair { |key, value| env_ary << FFI::MemoryPointer.from_string("#{key}=#{value}") }
 
